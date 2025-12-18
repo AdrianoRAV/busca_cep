@@ -215,19 +215,7 @@ def main(page: ft.Page):
     )
 
 
-    # Botão para limpar banco (opcional, para testes)
-    # btn_limpar = ft.ElevatedButton(
-    #     text="Limpar Registros",
-    #     icon=ft.Icons.DELETE_OUTLINE,
-    #     on_click=lambda e: limpar_registros(),
-    #     width=200,
-    #     height=50,
-    #     style=ft.ButtonStyle(
-    #         bgcolor=ft.Colors.RED_600,
-    #         color=ft.Colors.WHITE
-    #     )
-    # )
-
+    
     # Lista de registros
     lista_registros = ft.ListView(
         expand=True,
@@ -343,70 +331,7 @@ def main(page: ft.Page):
             #mostrar_mensagem(f"❌ Erro ao buscar CEP: {str(e)}", ft.colors.RED)
             focar_campo_codigo()
 
-    # Função para processar lote
-    # def processar_lote():
-    #     try:
-    #         conn = conectar_banco()
-    #         cursor = conn.cursor()
-    #
-    #         cursor.execute("SELECT id, codigo FROM tb_obj_registrado WHERE cep IS NULL")
-    #         registros = cursor.fetchall()
-    #
-    #         if not registros:
-    #             mostrar_mensagem("✅ Todos os registros já foram processados!", ft.colors.GREEN)
-    #             focar_campo_codigo()
-    #             return
-    #
-    #         progresso = ft.ProgressBar(width=400, color=ft.colors.BLUE)
-    #         progresso_container = ft.Container(
-    #             content=progresso,
-    #             padding=10
-    #         )
-    #
-    #         page.add(progresso_container)
-    #         page.update()
-    #
-    #         processados = 0
-    #         total = len(registros)
-    #
-    #         for reg in registros:
-    #             codigo = reg[1]  # Índice 1 é o código
-    #             cep = api_correios.get_cep_destinatario(codigo)
-    #
-    #             if cep:
-    #                 resultado = f"{codigo}|{cep}"
-    #                 with open("resultado.txt", "a", encoding="utf-8") as arquivo:
-    #                     arquivo.write(resultado + "\n")
-    #
-    #                 # Atualizar no banco
-    #                 cursor.execute(
-    #                     "UPDATE tb_obj_registrado SET cep = ?, status = 'processado' WHERE id = ?",
-    #                     (cep, reg[0])
-    #                 )
-    #                 conn.commit()
-    #
-    #                 processados += 1
-    #
-    #             progresso.value = processados / total
-    #             page.update()
-    #
-    #         page.remove(progresso_container)
-    #         mostrar_mensagem(f"✅ Processamento concluído! {processados}/{total} objetos", ft.colors.GREEN)
-    #
-    #         cursor.execute("DELETE FROM tb_obj_registrado WHERE cep IS NOT NULL")
-    #         conn.commit()
-    #
-    #         # Atualizar lista
-    #         carregar_registros()
-    #
-    #         cursor.close()
-    #         conn.close()
-    #         focar_campo_codigo()
-    #
-    #     except Exception as e:
-    #         mostrar_mensagem(f"❌ Erro ao processar lote: {str(e)}", ft.colors.RED)
-    #         focar_campo_codigo()
-
+    
     # Função para carregar registros
 
     def processar_lote():
@@ -578,43 +503,7 @@ def main(page: ft.Page):
 
 
 
-    # Função para limpar registros (opcional)
-    # def limpar_registros():
-    #     def confirmar_limpeza(e):
-    #         try:
-    #             conn = conectar_banco()
-    #             cursor = conn.cursor()
-    #
-    #             cursor.execute("DELETE FROM tb_obj_registrado")
-    #             conn.commit()
-    #
-    #             cursor.close()
-    #             conn.close()
-    #
-    #             carregar_registros()
-    #             atualizar_contador()
-    #             mostrar_mensagem("✅ Todos os registros foram removidos!", ft.Colors.GREEN)
-    #
-    #         except Exception as e:
-    #             mostrar_mensagem(f"❌ Erro ao limpar: {str(e)}", ft.Colors.RED)
-    #
-    #         page.dialog.open = False
-    #         page.update()
-    #
-    #     # Diálogo de confirmação
-    #     dlg = ft.AlertDialog(
-    #         title=ft.Text("Confirmar Limpeza"),
-    #         content=ft.Text("Tem certeza que deseja remover TODOS os registros?\nEsta ação não pode ser desfeita."),
-    #         actions=[
-    #             ft.TextButton("Cancelar", on_click=lambda e: setattr(dlg, 'open', False) or page.update()),
-    #             ft.TextButton("Confirmar", on_click=confirmar_limpeza, style=ft.ButtonStyle(color=ft.Colors.RED)),
-    #         ],
-    #     )
-    #
-    #     page.dialog = dlg
-    #     dlg.open = True
-    #     page.update()
-
+   
     # Função para mostrar mensagens
     def mostrar_mensagem(mensagem, cor):
         status_snackbar.content = ft.Text(mensagem)
